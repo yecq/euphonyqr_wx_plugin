@@ -1,0 +1,12 @@
+<scroll-view>
+<button class="btn-style" open-type="getUserInfo">打开用户权限</button>
+<button class="btn-style" bindtap='onclick2'>debugUpload</button>
+<button class="btn-style" bindtap='onclick3'>stop</button>
+ </scroll-view>
+
+ <view class="record-style">
+  
+ <button class="btn-style" bindtap='onclick'>检测</button>
+
+ <template wx:if="{{isOpenSetting}}" is="openSettingTemp" data="{{settingPrompt, settingContent, settingOpen, settingNotOpen}}" />
+ </view>
