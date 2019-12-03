@@ -1,0 +1,1 @@
+# euphonyqr_wx_plugin
