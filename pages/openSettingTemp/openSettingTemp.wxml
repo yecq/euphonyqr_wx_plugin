@@ -1,0 +1,14 @@
+<template name="openSettingTemp">
+  <view class='cover-modal'>
+    <view class='cover'>
+      <view class='prompt'>{{settingPrompt}}</view>
+      <view class='content'>
+        {{settingContent}}
+      </view>
+      <view class='btn-wrap'>
+        <button class='modal-btn' bindtap='cancelOpenSetting'>{{settingNotOpen}}</button>
+        <button class='modal-btn modal-btn-open' open-type="openSetting" bindopensetting="backFromSetting">{{settingOpen}}</button>
+      </view>
+    </view>
+  </view>
+</template>

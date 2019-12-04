@@ -1,6 +1,7 @@
 //app.js
 App({
   detector: requirePlugin("euphonyqr"),
+  openRecordSetting: require("pages/openSettingTemp/openSettingTemp.js"),//用户拒绝录音授权后会弹出提示框，每次运行只会打开一次
   onLaunch: function () {
     
     var config = this.detector.getConfig();//此方法返回默认config
@@ -11,7 +12,7 @@ App({
       buyfullTokenUrl: "https://sandbox.euphonyqr.com/testycq2/buyfulltoken",
       // abortTimeout: 3000,//单次网络请求超时
       //detectTimeout: 6000,//总超时
-      // debugLog: true,//true可以打开debugLog
+      debugLog: true,//true可以打开debugLog
       //channelMask: (this.detector.channelMask.CHANNEL_A | this.detector.channelMask.CHANNEL_B | this.detector.channelMask.CHANNEL_C | this.detector.channelMask.CHANNEL_D), //可以选择是否只针对4信道中的某几个录音
       //limitDB: -125,//当手机录音的分贝数低于此值时不上传检测
       // pauseAfterDetect: false, //检测完成后是否停止录音，设为false可提高检测速度，适合需要一直检测的场景

@@ -3,7 +3,10 @@ var detector = app.detector //请查看app.js
 Page({
   reqid: null,
   onLoad: function () {
-
+    //用户拒绝录音授权后会弹出提示框，每次运行只会打开一次
+    //请把openSettingTemp中的模板import进来，具体请查看index.wxml和index.wxss
+    //如果此页面没有调用录音功能，可以不加载此代码以及相应的模板
+    app.openRecordSetting.bindRecordSettingForPage(this, detector); 
   },
   onHide: function () {
     detector.stop();//如果init时设置了pauseAfterDetect = false，则需要停止录音
@@ -57,7 +60,13 @@ Page({
             console.log(res2);
             thiz.doDetect();
           },fail: function(err){
-            console.error(err);
+            thiz.onOpenRecordPermission(function (hasGotoSetting) {
+              if (hasGotoSetting) {
+                //如果打开了权限页，重试录音
+                thiz.doDetect();
+              }
+            });
+            return;
           }
         })
         return;

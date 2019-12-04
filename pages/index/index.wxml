@@ -1,3 +1,5 @@
+<import src="../openSettingTemp/openSettingTemp.wxml"/>
+
 <scroll-view>
 <button class="btn-style" open-type="getUserInfo">打开用户权限</button>
 <button class="btn-style" bindtap='onclick2'>debugUpload</button>
