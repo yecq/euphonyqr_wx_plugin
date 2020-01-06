@@ -23,58 +23,55 @@ Page({
     if (detector.isDetecting()) {
       return;//如果正在检测中，请等结束后再调用
     }
+    if (!app.globalData.token) {
+      console.error("please fetch token before request");
+      return;
+    }
+    this.retryCount = 0;
     this.doDetect();
   },
 
   doDetect: function () {
     var thiz = this;
     detector.detect({
-      version: "v2", //针对qieshu.net上的帐号请使用v2
-      openID: "", //可选，字符串，微信后台返回
-      unionID: "", //可选，字符串，微信后台返回
-      phoneNumber: "", //可选，字符串，openid,unionid,phonenumber中可以任意给一个或多个，可以给后台报表数据中作为统计数据的一个参数,没有将无法获得后台统计数据
-      customData: ""//,可选，字符串，可以给后台报表数据中作为统计数据回传
+      "token": app.globalData.token
     }, function (result) {
       console.log("检测结束,结果是:" + JSON.stringify(result));
-      thiz.reqid = result.reqid;
+      thiz.reqid = result.record_id;
       if (result.count > 0) {
         wx.showModal({
           title: 'result is:',
-          content: JSON.stringify(result.allTags),
+          content: thiz.reqid,
         })
       } else {
         wx.showModal({
           title: 'result is null, power is (dB):',
-          content: result.sortByPowerResult[0].power + "|" + result.sortByPowerResult[1].power,
+          content: thiz.reqid,
         })
       }
+
     }, function (errorCode, errorMsg) {
       //检测有错误会回调
-      //errorcode 定义请查看 "buyfullsdk.js"
       console.error(errorMsg);
       if (errorCode == detector.error.NO_RECORD_PERMISSION) {
         //没有录音权限，提醒打开权限
-        wx.authorize({
-          scope: 'scope.record',
-          success: function(res2){
-            console.log(res2);
+        thiz.onOpenRecordPermission(function (hasGotoSetting) {
+          if (hasGotoSetting) {
+            //如果打开了权限页，重试录音
             thiz.doDetect();
-          },fail: function(err){
-            thiz.onOpenRecordPermission(function (hasGotoSetting) {
-              if (hasGotoSetting) {
-                //如果打开了权限页，重试录音
-                thiz.doDetect();
-              }
-            });
-            return;
           }
-        })
+        });
         return;
       }
       //其它错误都可以重试
-      setTimeout(function(){
+      if (--thiz.retryCount > 0) {
+        console.log("retry count:" + thiz.retryCount);
         thiz.doDetect();
-      },1000);
+      } else {
+        wx.showToast({
+          title: 'error is: ' + errorMsg,
+        })
+      }
     });
   },
 })
