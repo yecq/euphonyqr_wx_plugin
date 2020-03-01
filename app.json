@@ -5,7 +5,7 @@
   ],
   "plugins": {
     "euphonyqr": {
-      "version": "2.3.4",
+      "version": "2.3.7",
       "provider": "wx93f19fa26be7cb64"
     }
   },
