@@ -1,10 +1,7 @@
 (function () {
 
-  var detector = requirePlugin("myPlugin");
+  var detector = requirePlugin("euphonyqr");
   var openRecordSetting = null;
-  // var detector = require("./buyfullsdk");//整个APP中有效
-  // var openRecordSetting = require("../pages/openSettingTemp/openSettingTemp.js");
-
 
   module.exports = {
     init: init,
@@ -25,8 +22,6 @@
     appKey: "75ba120532f44aa7a8cd431a2c2a50ef",
     tokenURL: "https://sandbox.euphonyqr.com/testycq3/euphonyqr_token",
     detectURL: "https://sandbox.euphonyqr.com/testycq3/euphonyqr_token_result",
-    // tokenURL: "http://192.168.1.11:8080/euphonyqr_token",
-    // detectURL: "http://192.168.1.11:8080/euphonyqr_token_result",
     token: null,
     lastResult: null,
     detectStarted: false,
@@ -80,7 +75,7 @@
   }
 
   function fetchToken(callback) {
-
+    //此处参数格式为DEMO，请自行修改
     var params = {
       "nocache": Math.random() * 10000000000,
       "appkey": globalData.appKey
@@ -113,6 +108,7 @@
   };
 
   function fetchDetectResult(_url, _success, _fail) {
+    
     var params = {
       "nocache": Math.random() * 10000000000,
       "appkey": globalData.appKey,
