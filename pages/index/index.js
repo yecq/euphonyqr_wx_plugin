@@ -67,7 +67,7 @@ Page({
         return;
       } else if (errorCode == detector.error.TOKEN_ERROR) {
         //token错误，重新获取token，之后再重试
-        detector.fetchToken(function () {
+        detector.fetchToken(true,function () {
           thiz.doDetect(true);
         });
       } else {

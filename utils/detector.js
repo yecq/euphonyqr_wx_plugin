@@ -1,7 +1,7 @@
 (function () {
 
   var detector = requirePlugin("euphonyqr");
-  var openRecordSetting = null;
+  
 
   module.exports = {
     init: init,
@@ -74,11 +74,12 @@
     return globalData.lastResult;
   }
 
-  function fetchToken(callback) {
+  function fetchToken(refresh,callback) {
     //此处参数格式为DEMO，请自行修改
     var params = {
       "nocache": Math.random() * 10000000000,
-      "appkey": globalData.appKey
+      "appkey": globalData.appKey,
+      "refresh": refresh,
     };
     console.log("fetch token: " + globalData.tokenURL);
     wx.request({
@@ -108,7 +109,7 @@
   };
 
   function fetchDetectResult(_url, _success, _fail) {
-    
+    //此处参数格式为DEMO，请自行修改
     var params = {
       "nocache": Math.random() * 10000000000,
       "appkey": globalData.appKey,
@@ -144,12 +145,12 @@
   };
 
   //!!!!此方法可选，如果此页面没有调用录音功能，可以不加载此代码以及相应的模板！！！
-  //用户拒绝录音授权后会弹出提示框，每次运行只会打开一次
+  //用户拒绝录音授权后会弹出提示框
   //请把openSettingTemp中的模板import进来，具体请查看index.wxml和index.wxss
-
+  var openRecordSetting = null;
   function onShowPage(page) {
     if (!openRecordSetting) {
-      //用户拒绝录音授权后会弹出提示框，每次运行只会打开一次
+      //用户拒绝录音授权后会弹出提示框
       openRecordSetting = require("../pages/openSettingTemp/openSettingTemp.js");
     }
     openRecordSetting.bindRecordSettingForPage(page, detector);
