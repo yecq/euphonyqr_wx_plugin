@@ -81,6 +81,9 @@
       "appkey": globalData.appKey,
       "refresh": refresh,
     };
+    if (refresh){
+      params.oldtoken = lastToken();
+    }
     console.log("fetch token: " + globalData.tokenURL);
     wx.request({
       url: globalData.tokenURL,
