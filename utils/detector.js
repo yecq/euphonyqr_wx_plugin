@@ -79,9 +79,9 @@
     var params = {
       "nocache": Math.random() * 10000000000,
       "appkey": globalData.appKey,
-      "refresh": refresh,
     };
     if (refresh){
+      params.refresh = true;
       params.oldtoken = lastToken();
     }
     console.log("fetch token: " + globalData.tokenURL);
