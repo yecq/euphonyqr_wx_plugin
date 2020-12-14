@@ -38,13 +38,14 @@
     if (globalData.needRestart){
       if (!globalData.lastHintRestart){
         //只会提示用户一次，是否重启
-        globalData.lastHintRestart = true;
-        wx.setStorageSync('_buyfull_lastRestartTime', Date.now() + "");
-        wx.showToast({
-          title: "无法成功检测，请断开蓝牙耳机或重启手机，谢谢!",
-          icon: "none",
-          duration: 5000,
-        });
+        if (!detector.stop({"record_fail": true})){
+          globalData.lastHintRestart = true;
+          wx.showToast({
+            title: "无法成功检测，请断开蓝牙耳机或点击微信右上角‘三个点’再选择‘重新进入’",
+            icon: "none",
+            duration: 5000,
+          });
+        }
       }
     }
   }
@@ -52,7 +53,6 @@
   function init(options) {
     var config = detector.getConfig();//此方法返回默认config
     console.log(config);
-    _checkRestart();
     detector.init(options);
     detector.setChannelInfoListener(onChannelChange);
     fetchToken();//获取token
@@ -83,8 +83,6 @@
 
     detector.detect({
       "token": globalData.token,
-      // "pauseAfterDetect": true,
-      // "onlyChannelInfo": true,
     }, function (urlresult) {
       //把URL发送给自己的业务服务器，让它去查询结果
       fetchDetectResult(urlresult, this.success, this.fail);
