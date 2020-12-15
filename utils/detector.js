@@ -38,14 +38,12 @@
     if (globalData.needRestart){
       if (!globalData.lastHintRestart){
         //只会提示用户一次，是否重启
-        if (!detector.stop({"record_fail": true})){
-          globalData.lastHintRestart = true;
-          wx.showToast({
-            title: "无法成功检测，请断开蓝牙耳机或点击微信右上角‘三个点’再选择‘重新进入’",
-            icon: "none",
-            duration: 5000,
-          });
-        }
+        globalData.lastHintRestart = true;
+        wx.showToast({
+          title: "无法成功检测，请断开蓝牙耳机或点击微信右上角‘三个点’再选择‘重新进入’",
+          icon: "none",
+          duration: 5000,
+        });
       }
     }
   }
