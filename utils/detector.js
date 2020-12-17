@@ -120,7 +120,7 @@
         }
       }
       totalDB /= totalSamples;
-      if (totalDB < -125 && !globalData.needRestart){
+      if (totalDB < -130 && !globalData.needRestart){
         console.error("Recording error, please restart WeChat app");
         globalData.needRestart = true;
         _checkRestart();
