@@ -4,7 +4,9 @@ App({
 
   onLaunch: function () {
     this.detector.init({
-      //debugLog: true,//true可以打开debugLog
+      debugLog: true,//true可以打开debugLog
+      // pauseAfterDetect: true,
+      // startBoost: false,
     });
   },
 

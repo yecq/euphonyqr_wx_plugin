@@ -65,6 +65,13 @@ Page({
           }
         });
         return;
+      }else if (errorCode == detector.error.RECORD_FAIL || errorCode == detector.error.CANT_START_RECORD) {
+        //录音失败，微信BUG
+        wx.showModal({
+          title: '微信录音失败',
+          content: errorMsg,
+        })
+        return;
       } else if (errorCode == detector.error.TOKEN_ERROR) {
         //token错误，重新获取token，之后再重试
         detector.fetchToken(true,function () {

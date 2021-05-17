@@ -24,6 +24,7 @@
     appKey: "75ba120532f44aa7a8cd431a2c2a50ef",
     tokenURL: "https://sandbox.euphonyqr.com/testycq3/euphonyqr_token",
     detectURL: "https://sandbox.euphonyqr.com/testycq3/euphonyqr_token_result",
+    pauseAfterDetect: true,
     token: null,
     lastResult: null,
     detectStarted: false,
